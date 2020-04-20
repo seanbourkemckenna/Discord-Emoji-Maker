@@ -1,8 +1,12 @@
 require 'base64'
 require 'httparty'
 
-@path = ""
-@guild_id = ""
+puts "Enter Guild ID:"
+@guild_id = gets.chomp
+puts "Enter bot API key"
+@bot_key = gets.chomp
+puts "Enter path"
+@path = gets.chomp
 
 def run
   Dir.foreach(@path) do |filename|
@@ -14,9 +18,9 @@ def run
 end
 
 def post(filename,encoded_image)
-  response = HTTParty.post("https://discordapp.com/api//guilds/#{guild_id}/emojis",
+  response = HTTParty.post("https://discordapp.com/api//guilds/#{@guild_id}/emojis",
                            :body => { :name => filename, :image => "data:image/png;base64," +  encoded_image}.to_json,
-                           :headers => { "Authorization" => ENV["TOKEN"], "Content-Type" => "application/json"})
+                           :headers => { "Authorization" => @bot_key, "Content-Type" => "application/json"})
   response
 end
 
